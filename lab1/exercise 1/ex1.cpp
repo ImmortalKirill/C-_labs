@@ -67,7 +67,7 @@ int main_loop(int (&crystal)[size][size]){
 }
 int main() {
     std::ofstream fout;
-    fout.open("C:/Users/kiril/CLionProjects/lab1/exercise 1/data exs1.txt", std::ios:: app);
+    fout.open("C:/Users/kiril/C-_labs/lab1/exercise 1/data exs1.txt", std::ios:: app);
     int crystal[size][size];
     float main_average = 0;
     for (int c = 0; c < 4; c++){

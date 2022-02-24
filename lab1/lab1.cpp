@@ -60,7 +60,7 @@ int main_loop(int (&crystal)[size][size]){
         }
         if (changes != 0) {
             rearrange(crystal);
-            //print(crystal);
+            print(crystal);
         }
     }
     return steps-1;
@@ -81,26 +81,11 @@ void random_array(int (&crystal)[size][size], int dis_area){
 
 }
 int main() {
-    std::ofstream fout_steps;
-    std::ofstream fout_rel;
-    fout_steps.open("C:/Users/kiril/CLionProjects/lab1/data exs2_steps.txt", std::ios:: app);
-    fout_rel.open("C:/Users/kiril/CLionProjects/lab1/data exs2_rel.txt", std::ios:: app);
-    int dis_area = 1;
-    while(dis_area < 30) {
-        float mean = 0;
-        for (int i = 0; i < accuracy; i++) {
-            int crystal[size][size] = {0};
-            random_array(crystal, dis_area);
-            mean += main_loop(crystal);
-        }
-        dis_area+=1;
-        std::cout << float(dis_area) / float(size * size) << ' ' << mean / accuracy << '\n';
-        fout_steps << mean / accuracy << '\n';
-        fout_rel << float(dis_area) / float(size * size) << '\n';
-    }
-    fout_rel.close();
-    fout_steps.close();
+    int crystal[size][size] = {0};
+    random_array(crystal, 10);
+    std::cout << main_loop(crystal)<< '\n';
 }
+
 
 
 

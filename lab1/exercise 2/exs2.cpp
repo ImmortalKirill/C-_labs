@@ -83,8 +83,8 @@ void random_array(int (&crystal)[size][size], int dis_area){
 int main() {
     std::ofstream fout_steps;
     std::ofstream fout_rel;
-    fout_steps.open("C:/Users/kiril/CLionProjects/lab1/data exs2_steps.txt", std::ios:: app);
-    fout_rel.open("C:/Users/kiril/CLionProjects/lab1/data exs2_rel.txt", std::ios:: app);
+    fout_steps.open("C:/Users/kiril/C-_labs/lab1/exercise 2/data exs2_steps.txt", std::ios:: app);
+    fout_rel.open("C:/Users/kiril/C-labs/lab1/exercise 2/data exs2_rel.txt", std::ios:: app);
     int dis_area = 1;
     while(dis_area < 30) {
         float mean = 0;
