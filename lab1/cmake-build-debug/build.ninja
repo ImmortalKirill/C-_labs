@@ -49,8 +49,8 @@ cmake_ninja_workdir = C$:/Users/kiril/C-_labs/lab1/cmake-build-debug/
 
 build cmake_object_order_depends_target_lab1: phony || CMakeFiles/lab1.dir
 
-build CMakeFiles/lab1.dir/lab1.cpp.obj: CXX_COMPILER__lab1_Debug C$:/Users/kiril/C-_labs/lab1/lab1.cpp || cmake_object_order_depends_target_lab1
-  DEP_FILE = CMakeFiles\lab1.dir\lab1.cpp.obj.d
+build CMakeFiles/lab1.dir/additional_2.cpp.obj: CXX_COMPILER__lab1_Debug C$:/Users/kiril/C-_labs/lab1/additional_2.cpp || cmake_object_order_depends_target_lab1
+  DEP_FILE = CMakeFiles\lab1.dir\additional_2.cpp.obj.d
   FLAGS = -g -std=gnu++14
   OBJECT_DIR = CMakeFiles\lab1.dir
   OBJECT_FILE_DIR = CMakeFiles\lab1.dir
@@ -63,7 +63,7 @@ build CMakeFiles/lab1.dir/lab1.cpp.obj: CXX_COMPILER__lab1_Debug C$:/Users/kiril
 #############################################
 # Link the executable lab1.exe
 
-build lab1.exe: CXX_EXECUTABLE_LINKER__lab1_Debug CMakeFiles/lab1.dir/lab1.cpp.obj
+build lab1.exe: CXX_EXECUTABLE_LINKER__lab1_Debug CMakeFiles/lab1.dir/additional_2.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\lab1.dir
