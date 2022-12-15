@@ -33,10 +33,10 @@ public:
         _val[1] = 0;
     }
     /// copy assignment operator
-    Imaginary<T>& operator =(Imaginary<T>& g){
+    Imaginary<T>& operator =(Imaginary<T> const& g){
         T* tmp__val = new T[2];
-        tmp__val[0] = g.Re();
-        tmp__val[1] = g.Im();
+        tmp__val[0] = g._val[0];
+        tmp__val[1] = g._val[1];
         delete [] _val;
         _val= tmp__val;
         return *this;
@@ -175,7 +175,6 @@ public:
             }
         }
     }
-
     /// conversion from reals
     Quaternion(T a): Quaternion(){
         _val[0] = a;
@@ -185,8 +184,15 @@ public:
         _val[0] = a._val[0];
         _val[1] = a._val[1];
     }
+    /// copy constructor
+    Quaternion(const Quaternion<T>& g): Quaternion(){
+        _val[0] = g._val[0];
+        _val[1] = g._val[1];
+        _val[2] = g._val[2];
+        _val[3] = g._val[3];
+    }
     /// copy assignment operator
-    Quaternion<T>& operator =(Quaternion<T>& g){
+    Quaternion<T>& operator =(Quaternion<T> const& g){
         T* tmp_val = new T[4];
         tmp_val[0] = g._val[0];
         tmp_val[1] = g._val[1];
@@ -235,30 +241,31 @@ public:
         _val[1] = g._val[1];
         g._val = {0};
     }
+
     ~Quaternion(){
         delete[] _val;
     }
     /// each operator also for reals and imaginary
     ///plus
-    Quaternion<T>& operator +(Quaternion<T> & g){
+    Quaternion<T> operator +(Quaternion<T> & g){
         return Quaternion<T>(_val[0] + g._val[0], _val[1] + g._val[1], _val[2] + g._val[2], _val[3] + g._val[3]);
-
     }
-    Quaternion<T>& operator +(Imaginary<T> & g){
+
+    Quaternion<T> operator +(Imaginary<T> & g){
         return Quaternion<T>(_val[0] + g._val[0], _val[1] + g._val[1], _val[2], _val[3]);
     }
-    Quaternion<T>& operator +(T & g){
+    Quaternion<T> operator +(T & g){
         return Quaternion<T>(_val[0] + g, _val[1], _val[2], _val[3]);
     }
 
     ///minus
-    Quaternion<T>& operator -(Quaternion<T> & g){
+    Quaternion<T> operator -(Quaternion<T> & g){
         return Quaternion<T>(_val[0] - g._val[0], _val[1] - g._val[1], _val[2] - g._val[2], _val[3] - g._val[3]);
     }
-    Quaternion<T>& operator -(Imaginary<T> & g){
+    Quaternion<T> operator -(Imaginary<T> & g){
         return Quaternion<T>(_val[0] - g._val[0], _val[1] - g._val[1], _val[2], _val[3]);
     }
-    Quaternion<T>& operator -(T & g){
+    Quaternion<T> operator -(T & g){
         return Quaternion<T>(_val[0] - g, _val[1], _val[2], _val[3]);
     }
 
@@ -304,10 +311,6 @@ public:
     Quaternion<T>& Conj(){
         return Quaternion<T>(_val[0], -_val[1], -_val[2], -_val[3]);
     }
-    /// print in form a + bi + cj + dk
-    void print() {
-        std::cout<<_val[0]<<" + "<<_val[1]<<"i + "<<_val[2]<<"j + "<<_val[3]<<"k"<<'\n';
-    }
 };
 
 template <typename T>
@@ -324,11 +327,11 @@ int main(){
  int x = 7;
 std::cout<< -b;
 
- Quaternion<int> c(b);
+ Quaternion<int> c(1,2,3,4);
  Quaternion<int> e(3, 2, 1, -1);
- c = f;
  Quaternion<int> g('j');
-std::cout<<c;
+ std::cout<<c-f<<c-e<<g;
+
 
 
 
