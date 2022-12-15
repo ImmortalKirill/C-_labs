@@ -53,7 +53,7 @@ public:
     /// move assignment operator
     Imaginary<T>& operator =(Imaginary<T>&& g){
         _val = g._val;
-        delete [] g._val;
+        g._val = {0};
         return *this;
     }
 
@@ -61,7 +61,7 @@ public:
     Imaginary<T>& operator =(T&& g){
         _val[0] = g;
         _val[1] = 0;
-        delete g;
+        g = 0;
         return *this;
     }
     ~Imaginary(){
@@ -161,34 +161,79 @@ public:
     /// basic quaternion units: "i", "j", "k"
     Quaternion(char a): Quaternion(){
         // you give a char i, j or k and it creates a unit
+        if (a == 'i'){
+            _val[1] = 1;
+        }
+        else {
+            if (a == 'j'){
+                _val[2] = 1;
+            }
+            else {
+                if (a == 'k'){
+                    _val[3] = 1;
+                }
+            }
+        }
     }
+
     /// conversion from reals
-    Quaternion(T a): Quaternion(){}
+    Quaternion(T a): Quaternion(){
+        _val[0] = a;
+    }
     /// conversion from imaginary
-    Quaternion(Imaginary<T> a): Quaternion(){}
+    Quaternion(Imaginary<T> a): Quaternion(){
+        _val[0] = a._val[0];
+        _val[1] = a._val[1];
+    }
     /// copy assignment operator
     Quaternion<T>& operator =(Quaternion<T>& g){
-
+        T* tmp_val = new T[4];
+        tmp_val[0] = g._val[0];
+        tmp_val[1] = g._val[1];
+        tmp_val[2] = g._val[2];
+        tmp_val[3] = g._val[3];
+        delete [] _val;
+        _val= tmp_val;
+        return *this;
     }
     /// copy assignment operator from reals
     Quaternion<T>& operator =(T& g){
-
+        T* tmp_val = new T[4]{0};
+        tmp_val[0] = g;
+        delete [] _val;
+        _val= tmp_val;
+        return *this;
     }
     /// copy assignment operator from imaginary
     Quaternion<T>& operator =(Imaginary<T>& g){
-
+        T* tmp_val = new T[4]{0};
+        tmp_val[0] = g._val[0];
+        tmp_val[1] = g._val[1];
+        delete [] _val;
+        _val= tmp_val;
+        return *this;
     }
     /// move assignment operator
     Quaternion<T>& operator =(Quaternion<T>&& g){
-
+        _val[0] = g._val[0];
+        _val[1] = g._val[1];
+        _val[2] = g._val[2];
+        _val[3] = g._val[3];
+        g._val = {0};
+        return *this;
     }
     /// move assignment operator from reals
     Quaternion<T>& operator =(T&& g){
-
+        _val = {0};
+        _val[0] = g;
+        g._val = {0};
     }
     /// move assignment operator from imaginary
     Quaternion<T>& operator =(Imaginary<T>&& g){
-
+        _val = {0};
+        _val[0] = g._val[0];
+        _val[1] = g._val[1];
+        g._val = {0};
     }
     ~Quaternion(){
         delete[] _val;
@@ -275,17 +320,15 @@ int main(){
  Imaginary<int> a = 5;
  Imaginary<int> b(5, 3);
  Imaginary<int> f(2, -9);
+ b = f;
  int x = 7;
 std::cout<< -b;
- Imaginary<int> b_copy(b);
- auto b_move(std::move(b));
- std::cout<<b_copy<<b_move;
- Imaginary<int> x_move = std::move(x);
- std::cout<<x_move;
- //b = 5;
- Quaternion<int> c(5, 0, 3, 2);
+
+ Quaternion<int> c(b);
  Quaternion<int> e(3, 2, 1, -1);
-//std::cout<<c + e;
+ c = f;
+ Quaternion<int> g('j');
+std::cout<<c;
 
 
 
