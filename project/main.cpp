@@ -18,7 +18,9 @@ public:
     }
     /// move constructor
     Imaginary(Imaginary<T>&& g): Imaginary(){
-        // TODO how to make it?
+        _val[0] = g.Re();
+        _val[1] = g.Im();
+        g._val = {0};
     }
     /// imaginary unit
     Imaginary(char a):Imaginary(){
@@ -52,6 +54,7 @@ public:
     Imaginary<T>& operator =(Imaginary<T>&& g){
         /*Imaginary<T> tmp(std::move(g)); // TODO how to make it?
         std::swap(this->_val, tmp.data);*/
+
         return *this;
     }
     /// move assignment operator from reals
@@ -63,25 +66,59 @@ public:
     }
     /// each operator also for reals
     ///plus
-    Imaginary<T>& operator +(Imaginary<T> & g){}
-    Imaginary<T>& operator +(T & g){}
+    Imaginary<T> operator +(Imaginary<T> & g){
+        return Imaginary<T>(_val[0] + g._val[0], _val[1] + g._val[1]);
+    }
+    Imaginary<T> operator +(T & g){
+        return Imaginary<T>(_val[0] + g, _val[1]);
+    }
     ///minus
-    Imaginary<T>& operator -(Imaginary<T> & g){}
-    Imaginary<T>& operator -(T & g){}
+    Imaginary<T> operator -(Imaginary<T> & g){
+        return Imaginary<T>(_val[0] - g._val[0], _val[1] - g._val[1]);
+    }
+    Imaginary<T> operator -(T & g){
+        return Imaginary<T>(_val[0] - g, _val[1]);
+    }
     ///multiply
-    Imaginary<T>& operator *(Imaginary<T> & g){}
-    Imaginary<T>& operator *(T & g){}
+    Imaginary<T> operator *(Imaginary<T> & g){
+        return Imaginary<T>(_val[0] * g._val[0] - _val[1] * g._val[1], _val[0] * g._val[1] + _val[1] * g._val[0]);
+    }
+    Imaginary<T> operator *(T & g){
+        return Imaginary<T>(_val[0] * g, _val[1] * g);
+    }
     ///plus equals
-    void operator +=(Imaginary<T> & g){}
-    void operator +=(T & g){}
+    void operator +=(Imaginary<T> & g){
+        _val[0] += g._val[0];
+        _val[1] += g._val[1];
+    }
+    void operator +=(T & g){
+        _val[0] += g;
+    }
     ///minus equals
-    void operator -=(Imaginary<T> & g){}
-    void operator -=(T & g){}
+    void operator -=(Imaginary<T> & g){
+        _val[0] -= g._val[0];
+        _val[1] -= g._val[1];
+    }
+    void operator -=(T & g){
+        _val[0] -= g;
+    }
     /// times equals
-    void operator *=(Imaginary<T> & g){}
-    void operator *=(T & g){}
+    void operator *=(Imaginary<T> & g){
+        T a = _val[0] * g._val[0] - _val[1] * g._val[1];
+        T b = _val[0] * g._val[1] + _val[1] * g._val[0];
+        _val[0] = a;
+        _val[1] = b;
+    }
+    void operator *=(T & g){
+        _val[0] *= g;
+        _val[1] *= g;
+    }
     /// minus itself
-    Imaginary<T>& operator -(){}
+    Imaginary<T>& operator -(){
+        /// TODO doesn't work
+        _val[0] = -_val[0];
+        _val[1] = -_val[1];
+    }
     /// get real part
     T Re(){
         return _val[0];
@@ -99,6 +136,13 @@ public:
         return Imaginary<T>(_val[0], -_val[1]);
     }
 };
+
+template <typename T>
+/// print Imaginary in form a + bi
+std::ostream& operator <<(std::ostream &os, const Imaginary<T> &im) {
+    return os<<im._val[0]<<" + "<<im._val[1]<<"i"<<'\n';
+}
+
 template <typename T>
 class Quaternion{
 public:
@@ -150,14 +194,27 @@ public:
     }
     /// each operator also for reals and imaginary
     ///plus
-    Quaternion<T>& operator +(Quaternion<T> & g){}
-    Quaternion<T>& operator +(Imaginary<T> & g){}
-    Quaternion<T>& operator +(T & g){}
+    Quaternion<T>& operator +(Quaternion<T> & g){
+        return Quaternion<T>(_val[0] + g._val[0], _val[1] + g._val[1], _val[2] + g._val[2], _val[3] + g._val[3]);
+
+    }
+    Quaternion<T>& operator +(Imaginary<T> & g){
+        return Quaternion<T>(_val[0] + g._val[0], _val[1] + g._val[1], _val[2], _val[3]);
+    }
+    Quaternion<T>& operator +(T & g){
+        return Quaternion<T>(_val[0] + g, _val[1], _val[2], _val[3]);
+    }
 
     ///minus
-    Quaternion<T>& operator -(Quaternion<T> & g){}
-    Quaternion<T>& operator -(Imaginary<T> & g){}
-    Quaternion<T>& operator -(T & g){}
+    Quaternion<T>& operator -(Quaternion<T> & g){
+        return Quaternion<T>(_val[0] - g._val[0], _val[1] - g._val[1], _val[2] - g._val[2], _val[3] - g._val[3]);
+    }
+    Quaternion<T>& operator -(Imaginary<T> & g){
+        return Quaternion<T>(_val[0] - g._val[0], _val[1] - g._val[1], _val[2], _val[3]);
+    }
+    Quaternion<T>& operator -(T & g){
+        return Quaternion<T>(_val[0] - g, _val[1], _val[2], _val[3]);
+    }
 
     /// multiply
     Quaternion<T>& operator *(Quaternion<T> & g){}
@@ -201,9 +258,31 @@ public:
     Quaternion<T>& Conj(){
         return Quaternion<T>(_val[0], -_val[1], -_val[2], -_val[3]);
     }
+    /// print in form a + bi + cj + dk
+    void print() {
+        std::cout<<_val[0]<<" + "<<_val[1]<<"i + "<<_val[2]<<"j + "<<_val[3]<<"k"<<'\n';
+    }
 };
+
+template <typename T>
+/// print Quaternion in form a + bi + cj + dk
+std::ostream& operator <<(std::ostream &os, const Quaternion<T> &q) {
+    return os<<q._val[0]<<" + "<<q._val[1]<<"i + "<<q._val[2]<<"j + "<<q._val[3]<<"k"<<'\n';
+}
+
 int main(){
- Imaginary<int> a('i');
+ Imaginary<int> a = 5;
  Imaginary<int> b(5, 3);
- b = 5;
+ Imaginary<int> f(2, -9);
+ int x = 7;
+std::cout<<b*f;
+ Imaginary<int> b_copy(b);
+ auto b_move(std::move(b));
+ std::cout<<b_copy<<b_move;
+ //b = 5;
+ Quaternion<int> c(5, 0, 3, 2);
+ Quaternion<int> e(3, 2, 1, -1);
+//std::cout<<c + e;
+
+
 }
