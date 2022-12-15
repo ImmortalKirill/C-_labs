@@ -52,14 +52,17 @@ public:
     }
     /// move assignment operator
     Imaginary<T>& operator =(Imaginary<T>&& g){
-        /*Imaginary<T> tmp(std::move(g)); // TODO how to make it?
-        std::swap(this->_val, tmp.data);*/
-
+        _val = g._val;
+        delete [] g._val;
         return *this;
     }
+
     /// move assignment operator from reals
     Imaginary<T>& operator =(T&& g){
-        // TODO how to make it?
+        _val[0] = g;
+        _val[1] = 0;
+        delete g;
+        return *this;
     }
     ~Imaginary(){
         delete[] _val;
@@ -114,10 +117,8 @@ public:
         _val[1] *= g;
     }
     /// minus itself
-    Imaginary<T>& operator -(){
-        /// TODO doesn't work
-        _val[0] = -_val[0];
-        _val[1] = -_val[1];
+    Imaginary<T> operator -(){
+        return Imaginary<T>(-_val[0], -_val[1]);
     }
     /// get real part
     T Re(){
@@ -275,14 +276,17 @@ int main(){
  Imaginary<int> b(5, 3);
  Imaginary<int> f(2, -9);
  int x = 7;
-std::cout<<b*f;
+std::cout<< -b;
  Imaginary<int> b_copy(b);
  auto b_move(std::move(b));
  std::cout<<b_copy<<b_move;
+ Imaginary<int> x_move = std::move(x);
+ std::cout<<x_move;
  //b = 5;
  Quaternion<int> c(5, 0, 3, 2);
  Quaternion<int> e(3, 2, 1, -1);
 //std::cout<<c + e;
+
 
 
 }
