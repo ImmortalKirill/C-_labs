@@ -64,14 +64,14 @@ public:
     }
     /// each operator also for reals
     ///plus
-    Imaginary<T> operator +(Imaginary<T> & g){
+    Imaginary<T> operator +(Imaginary<T>  g){
         return Imaginary<T>(_val[0] + g._val[0], _val[1] + g._val[1]);
     }
     Imaginary<T> operator +(T g){
         return Imaginary<T>(_val[0] + g, _val[1]);
     }
     /// operator works in reverse real + quaternions
-    friend Imaginary<T> operator+(T g1, Imaginary<T>& g2){
+    friend Imaginary<T> operator+(T g1, Imaginary<T> g2){
         return g2+g1;
     }
     /// minus itself
@@ -79,29 +79,29 @@ public:
         return Imaginary<T>(-_val[0], -_val[1]);
     }
     ///minus
-    Imaginary<T> operator -(Imaginary<T> & g){
+    Imaginary<T> operator -(Imaginary<T>  g){
         return Imaginary<T>(_val[0] - g._val[0], _val[1] - g._val[1]);
     }
     Imaginary<T> operator -(T g){
         return Imaginary<T>(_val[0] - g, _val[1]);
     }
     /// operator works in reverse real - quaternions
-    friend Imaginary<T> operator-(T g1, Imaginary<T>& g2){
+    friend Imaginary<T> operator-(T g1, Imaginary<T> g2){
         return (-g2)+g1;
     }
     ///multiply
-    Imaginary<T> operator *(Imaginary<T> & g){
+    Imaginary<T> operator *(Imaginary<T>  g){
         return Imaginary<T>(_val[0] * g._val[0] - _val[1] * g._val[1], _val[0] * g._val[1] + _val[1] * g._val[0]);
     }
     Imaginary<T> operator *(T g){
         return Imaginary<T>(_val[0] * g, _val[1] * g);
     }
     /// operator works in reverse real * quaternions
-    friend Imaginary<T> operator*(T g1, Imaginary<T>& g2){
+    friend Imaginary<T> operator*(T g1, Imaginary<T> g2){
         return g2*g1;
     }
     ///plus equals
-    void operator +=(Imaginary<T> & g){
+    void operator +=(Imaginary<T>  g){
         _val[0] += g._val[0];
         _val[1] += g._val[1];
     }
@@ -109,7 +109,7 @@ public:
         _val[0] += g;
     }
     ///minus equals
-    void operator -=(Imaginary<T> & g){
+    void operator -=(Imaginary<T>  g){
         _val[0] -= g._val[0];
         _val[1] -= g._val[1];
     }
@@ -117,7 +117,7 @@ public:
         _val[0] -= g;
     }
     /// times equals
-    void operator *=(Imaginary<T> & g){
+    void operator *=(Imaginary<T>  g){
         T a = _val[0] * g._val[0] - _val[1] * g._val[1];
         T b = _val[0] * g._val[1] + _val[1] * g._val[0];
         _val[0] = a;
@@ -141,7 +141,7 @@ public:
         return _val[0]*_val[0]+_val[1]*_val[1];
     }
     /// conjurate of a: a - b*i
-    Imaginary<T>& Conj(){
+    Imaginary<T> Conj(){
         return Imaginary<T>(_val[0], -_val[1]);
     }
 };
@@ -246,22 +246,22 @@ public:
     }
     /// each operator also for reals and imaginary
     ///plus
-    Quaternion<T> operator +(Quaternion<T> & g){
+    Quaternion<T> operator +(Quaternion<T>  g){
         return Quaternion<T>(_val[0] + g._val[0], _val[1] + g._val[1], _val[2] + g._val[2], _val[3] + g._val[3]);
     }
 
-    Quaternion<T> operator +(Imaginary<T> & g){
+    Quaternion<T> operator +(Imaginary<T>  g){
         return Quaternion<T>(_val[0] + g._val[0], _val[1] + g._val[1], _val[2], _val[3]);
     }
     /// operator works in reverse imaginary + quaternions
-    friend Quaternion<T> operator+(Imaginary<T>& g1, Quaternion<T>& g2){
+    friend Quaternion<T> operator+(Imaginary<T> g1, Quaternion<T> g2){
         return g2+g1;
     }
     Quaternion<T> operator +(T g){
         return Quaternion<T>(_val[0] + g, _val[1], _val[2], _val[3]);
     }
     /// operator works in reverse real + quaternion
-    friend Quaternion<T> operator+(T g1, Quaternion<T>& g2){
+    friend Quaternion<T> operator+(T g1, Quaternion<T> g2){
         return g2+g1;
     }
 
@@ -271,14 +271,14 @@ public:
     }
 
     ///minus
-    Quaternion<T> operator -(Quaternion<T> & g){
+    Quaternion<T> operator -(Quaternion<T>  g){
         return Quaternion<T>(_val[0] - g._val[0], _val[1] - g._val[1], _val[2] - g._val[2], _val[3] - g._val[3]);
     }
-    Quaternion<T> operator -(Imaginary<T> & g){
+    Quaternion<T> operator -(Imaginary<T>  g){
         return Quaternion<T>(_val[0] - g._val[0], _val[1] - g._val[1], _val[2], _val[3]);
     }
     /// operator works in reverse imaginary - quaternion
-    friend Quaternion<T> operator-(Imaginary<T> &g1, Quaternion<T>& g2){
+    friend Quaternion<T> operator-(Imaginary<T> g1, Quaternion<T> g2){
         return (-g2)+g1;
     }
 
@@ -286,12 +286,12 @@ public:
         return Quaternion<T>(_val[0] - g, _val[1], _val[2], _val[3]);
     }
     /// operator works in reverse real - quaternion
-    friend Quaternion<T> operator-(T g1, Quaternion<T>& g2){
+    friend Quaternion<T> operator-(T g1, Quaternion<T> g2){
         return (-g2)+g1;
     }
 
     /// multiply
-    Quaternion<T> operator *(Quaternion<T> & g){
+    Quaternion<T> operator *(Quaternion<T>  g){
         T k[4] = {_val[0], _val[1], _val[2], _val[3]};
         T g_k[4] = {g._val[0], g._val[1], g._val[2], g._val[3]};
         T a1 = k[0]*g_k[0] - k[1]*g_k[1] - k[2]*g_k[2] - k[3]*g_k[3];
@@ -300,26 +300,26 @@ public:
         T a4 = k[0]*g_k[3] + g_k[0]*k[3] + k[1]*g_k[2] - g_k[1]*k[2];
         return Quaternion<T>(a1, a2, a3, a4);
     }
-    Quaternion<T> operator *(Imaginary<T> & g){
+    Quaternion<T> operator *(Imaginary<T>  g){
         return (*this)*Quaternion<T>(g);
     }
     /// operator works in reverse imaginary*quaternion
-    friend Quaternion<T> operator*(Imaginary<T> &g1, Quaternion<T>& g2){
+    friend Quaternion<T> operator*(Imaginary<T> g1, Quaternion<T> g2){
         return g2*g1;
     }
     Quaternion<T> operator *(T g){
         return (*this)*Quaternion<T>(g);
     }
     /// operator works in reverse imaginary*quaternion
-    friend Quaternion<T> operator*(T g1, Quaternion<T>& g2){
+    friend Quaternion<T> operator*(T g1, Quaternion<T> g2){
         return g2*g1;
     }
     /// plus equals
-    void operator +=(Quaternion<T> & g){
+    void operator +=(Quaternion<T>  g){
         Quaternion<T> a = (*this)+g;
         _val = a._val;
     }
-    void operator +=(Imaginary<T> & g){
+    void operator +=(Imaginary<T>  g){
         Quaternion<T> a = (*this)+g;
         _val = a._val;
     }
@@ -328,11 +328,11 @@ public:
         _val = a._val;
     }
     ///minus equals
-    void operator -=(Quaternion<T> & g){
+    void operator -=(Quaternion<T>  g){
         Quaternion<T> a = (*this)-g;
         _val = a._val;
     }
-    void operator -=(Imaginary<T> & g){
+    void operator -=(Imaginary<T>  g){
         Quaternion<T> a = (*this)-g;
         _val = a._val;
     }
@@ -341,11 +341,11 @@ public:
         _val = a._val;
     }
     /// times equals
-    void operator *=(Quaternion<T> & g){
+    void operator *=(Quaternion<T>  g){
         Quaternion<T> a = (*this)*g;
         _val = a._val;
     }
-    void operator *=(Imaginary<T> & g){
+    void operator *=(Imaginary<T>  g){
         Quaternion<T> a = (*this)*g;
         _val = a._val;
     }
@@ -375,7 +375,7 @@ public:
         return _val[0]*_val[0]+_val[1]*_val[1]+_val[2]*_val[2]+_val[3]*_val[3];
     }
     /// conjurate of a: a - b*i - c*j-d*k
-    Quaternion<T>& Conj(){
+    Quaternion<T> Conj(){
         return Quaternion<T>(_val[0], -_val[1], -_val[2], -_val[3]);
     }
 };
@@ -390,8 +390,9 @@ int main(){
  Quaternion<int> k('k');
  Quaternion<int> i('i');
  Quaternion<int> j('j');
+ Imaginary<int> i1('i');
  std::cout<<i<<j<<k;
- Quaternion<int> b = 3+i;
+ Quaternion<int> b = i*j+k;
  std::cout << b;
 
 
